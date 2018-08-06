@@ -19,6 +19,8 @@
 
         <service id="adauth.transport.unencrypted" class="%adauth.transport.unencrypted.class%" public="false" />
 
+        <service id="AdAuth\AdAuthInterface" alias="adauth"></service>
+
         <service id="adauth" class="%adauth.class%">
             <argument /> <!-- host -->
             <argument /> <!-- port -->
