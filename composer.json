@@ -1,6 +1,6 @@
 {
     "name": "schoolit/adauth-bundle",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "type": "symfony-bundle",
     "license": "MIT",
     "require": {
