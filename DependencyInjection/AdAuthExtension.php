@@ -19,13 +19,20 @@ class AdAuthExtension extends Extension {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('adauth.host', $config['host']);
-        $container->setParameter('adauth.port', $config['port']);
-        $container->setParameter('adauth.transport', $config['transport']);
+        $options = $this->resolveOptions($config['url']);
 
-        if($container->getParameter('adauth.transport') === 'tls') {
-            $container->setParameter('adauth.transport.tls.peer_name', $config['tls']['peer_name']);
+        $container->setParameter('adauth.url', $config['url']);
+
+        if(isset($config['tls']['serialnumber'])) {
             $container->setParameter('adauth.transport.tls.serialnumber', $config['tls']['serialnumber']);
+        }
+
+        $container->setParameter('adauth.host', $options['host']);
+        $container->setParameter('adauth.port', $options['port']);
+        $container->setParameter('adauth.transport', $options['transport']);
+
+        if($options['transport'] === 'tls') {
+            $container->setParameter('adauth.transport.tls.peer_name', $config['tls']['peer_name']);
             $container->setParameter('adauth.transport.tls.ca_certificate_file', $config['tls']['ca_certificate_file']);
 
             $def = $container->getDefinition('adauth.transport.tls');
@@ -38,13 +45,39 @@ class AdAuthExtension extends Extension {
         $def->replaceArgument(0, $container->getParameter('adauth.host'));
         $def->replaceArgument(1, $container->getParameter('adauth.port'));
 
-        if($container->getParameter('adauth.transport') === 'tls') {
+        if($options['transport'] === 'tls') {
             $def->replaceArgument(2, new Reference('adauth.transport.tls'));
-        } else {
+        } else if($options['transport'] === 'tcp') {
             $def->replaceArgument(2, new Reference('adauth.transport.unencrypted'));
+        } else {
+            throw new \InvalidArgumentException(sprintf('Invalid transport specified: %s', $options['transport']));
         }
 
         $def->replaceArgument(3, new Reference('jms_serializer'));
+    }
+
+    public function resolveOptions(string $url) {
+        $options = [
+            'transport' => 'tcp',
+            'host' => null,
+            'port' => 55117
+        ];
+
+        $parts = parse_url($url);
+
+        if(isset($parts['scheme'])) {
+            $options['transport'] = $parts['scheme'];
+        }
+
+        if(isset($parts['host'])) {
+            $options['host'] = $parts['host'];
+        }
+
+        if(isset($parts['port'])) {
+            $options['port'] = $parts['port'];
+        }
+
+        return $options;
     }
 
     public function getAlias() {
