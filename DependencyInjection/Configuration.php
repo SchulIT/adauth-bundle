@@ -11,8 +11,14 @@ class Configuration implements ConfigurationInterface {
      * @inheritDoc
      */
     public function getConfigTreeBuilder() {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('adauth');
+        $treeBuilder = new TreeBuilder('adauth');
+
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('adauth');
+        }
 
         $rootNode
             ->children()
