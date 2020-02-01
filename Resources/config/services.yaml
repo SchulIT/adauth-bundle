@@ -1,0 +1,23 @@
+services:
+  AdAuth\Stream\TlsStream:
+    arguments:
+      - '' # CA file
+      - '' # peer name
+      - '' # peer fingerprint
+  AdAuth\Stream\UnencryptedStream: ~
+
+  AdAuth\AdAuthInterface:
+    class: AdAuth\AdAuth
+    arguments:
+      - '' # Host
+      - ~ # Stream
+      - ~ # Serializer
+      - 55117 # Port
+
+  AdAuth\Command\AuthRequestCommand:
+    tags:
+      - { name: 'console.command', command: 'adauth:request:auth' }
+
+  AdAuth\Command\PingRequestCommand:
+    tags:
+      - { name: 'console.command', command: 'adauth:request:ping' }
