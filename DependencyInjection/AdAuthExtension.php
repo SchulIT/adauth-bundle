@@ -4,6 +4,7 @@ namespace AdAuthBundle\DependencyInjection;
 
 use AdAuth\AdAuthInterface;
 use AdAuth\Stream\TlsStream;
+use AdAuth\Stream\UnencryptedStream;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -48,9 +49,9 @@ class AdAuthExtension extends Extension {
         $def->replaceArgument(3, $container->getParameter('adauth.port'));
 
         if($options['transport'] === 'tls') {
-            $def->replaceArgument(1, new Reference('adauth.transport.tls'));
+            $def->replaceArgument(1, new Reference(TlsStream::class));
         } else if($options['transport'] === 'tcp') {
-            $def->replaceArgument(1, new Reference('adauth.transport.unencrypted'));
+            $def->replaceArgument(1, new Reference(UnencryptedStream::class));
         } else {
             throw new \InvalidArgumentException(sprintf('Invalid transport specified: %s', $options['transport']));
         }
