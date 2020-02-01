@@ -26,8 +26,12 @@ class AdAuthExtension extends Extension {
 
         $container->setParameter('adauth.url', $config['url']);
 
-        if(isset($config['tls']['serialnumber'])) {
-            $container->setParameter('adauth.transport.tls.serialnumber', $config['tls']['serialnumber']);
+        if(isset($config['tls']['peer_name'])) {
+            $container->setParameter('adauth.transport.tls.peer_name', $config['tls']['peer_name']);
+        }
+
+        if(isset($config['tls']['peer_fingerprint'])) {
+            $container->setParameter('adauth.transport.tls.peer_fingerprint', $config['tls']['peer_fingerprint']);
         }
 
         $container->setParameter('adauth.host', $options['host']);
