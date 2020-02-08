@@ -4,27 +4,20 @@ namespace AdAuthBundle;
 
 use AdAuth\AdAuth;
 use AdAuth\Stream\TlsStream;
-use AdAuth\Stream\UnencryptedStream;
 use JMS\Serializer\SerializerInterface;
 
 class AdAuthFactory {
 
     public static function createAdAuth(string $url, array $params, SerializerInterface $serializer) {
         $options = static::resolveOptions($url);
-
-        $stream = new UnencryptedStream();
-
-
-        if($options['transport'] === 'tls') {
-            $stream = new TlsStream($params['ca_certificate_file'], $params['peer_name'], $params['peer_fingerprint']);
-        }
+        $stream = new TlsStream($params['ca_certificate_file'], $params['peer_name'], $params['peer_fingerprint']);
 
         return new AdAuth($options['host'], $stream, $serializer, $options['port']);
     }
 
     private static function resolveOptions(string $url) {
         $options = [
-            'transport' => 'tcp',
+            'transport' => 'tls',
             'host' => null,
             'port' => 55117
         ];
