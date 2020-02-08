@@ -8,11 +8,17 @@
         "ext-iconv": "*",
         "symfony/framework-bundle": "^4.0",
         "symfony/yaml": "^4.0",
-        "schoolit/adauth": "^2.0"
+        "schoolit/adauth": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "AdAuthBundle\\": ""
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/schoolit/adauth"
+        }
+    ]
 }
