@@ -4,7 +4,6 @@ services:
       - '' # CA file
       - '' # peer name
       - '' # peer fingerprint
-  AdAuth\Stream\UnencryptedStream: ~
 
   AdAuthBundle\AdAuthFactory: ~
 
