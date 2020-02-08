@@ -22,69 +22,12 @@ class AdAuthExtension extends Extension {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $options = $this->resolveOptions($config['url']);
-
         $container->setParameter('adauth.url', $config['url']);
 
-        if(isset($config['tls']['peer_name'])) {
-            $container->setParameter('adauth.transport.tls.peer_name', $config['tls']['peer_name']);
-        }
-
-        if(isset($config['tls']['peer_fingerprint'])) {
-            $container->setParameter('adauth.transport.tls.peer_fingerprint', $config['tls']['peer_fingerprint']);
-        }
-
-        $container->setParameter('adauth.host', $options['host']);
-        $container->setParameter('adauth.port', $options['port']);
-        $container->setParameter('adauth.transport', $options['transport']);
-
-        if($options['transport'] === 'tls') {
-            $container->setParameter('adauth.transport.tls.peer_name', $config['tls']['peer_name']);
-            $container->setParameter('adauth.transport.tls.ca_certificate_file', $config['tls']['ca_certificate_file']);
-
-            $def = $container->getDefinition(TlsStream::class);
-            $def->replaceArgument(0, $config['tls']['ca_certificate_file']);
-            $def->replaceArgument(1, $config['tls']['peer_name']);
-            $def->replaceArgument(2, $config['tls']['peer_fingerprint']);
-        }
-
         $def = $container->getDefinition(AdAuthInterface::class);
-        $def->replaceArgument(0, $container->getParameter('adauth.host'));
-        $def->replaceArgument(3, $container->getParameter('adauth.port'));
-
-        if($options['transport'] === 'tls') {
-            $def->replaceArgument(1, new Reference(TlsStream::class));
-        } else if($options['transport'] === 'tcp') {
-            $def->replaceArgument(1, new Reference(UnencryptedStream::class));
-        } else {
-            throw new \InvalidArgumentException(sprintf('Invalid transport specified: %s', $options['transport']));
-        }
-
-        $def->replaceArgument(2, new Reference($config['serializer']));
-    }
-
-    public function resolveOptions(string $url) {
-        $options = [
-            'transport' => 'tcp',
-            'host' => null,
-            'port' => 55117
-        ];
-
-        $parts = parse_url($url);
-
-        if(isset($parts['scheme'])) {
-            $options['transport'] = $parts['scheme'];
-        }
-
-        if(isset($parts['host'])) {
-            $options['host'] = $parts['host'];
-        }
-
-        if(isset($parts['port'])) {
-            $options['port'] = $parts['port'];
-        }
-
-        return $options;
+        $def->setArgument(0, $config['url']);
+        $def->setArgument(1, $config['tls']);
+        $def->setArgument(2, new Reference($config['serializer']));
     }
 
     public function getAlias() {

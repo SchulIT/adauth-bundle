@@ -6,13 +6,15 @@ services:
       - '' # peer fingerprint
   AdAuth\Stream\UnencryptedStream: ~
 
+  AdAuthBundle\AdAuthFactory: ~
+
   AdAuth\AdAuthInterface:
     class: AdAuth\AdAuth
+    factory: ['AdAuthBundle\AdAuthFactory', 'createAdAuth']
     arguments:
-      - '' # Host
-      - ~ # Stream
+      - '' # URL
+      - '' # Params
       - ~ # Serializer
-      - 55117 # Port
 
   AdAuth\Command\AuthRequestCommand:
     tags:
