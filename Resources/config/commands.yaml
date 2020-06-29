@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  AdAuthBundle\Command\AuthRequestCommand:
+    tags:
+      - { name: 'console.command', command: 'adauth:request:auth' }
+
+  AdAuthBundle\Command\PingRequestCommand:
+    tags:
+      - { name: 'console.command', command: 'adauth:request:ping' }
