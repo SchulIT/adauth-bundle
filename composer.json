@@ -1,25 +1,19 @@
 {
-    "name": "schoolit/adauth-bundle",
-    "version": "2.0.0",
+    "name": "schulit/adauth-bundle",
+    "version": "1.0.0",
     "type": "symfony-bundle",
     "license": "MIT",
     "require": {
         "php": "^7.4",
         "ext-iconv": "*",
-        "symfony/console": "^4.4",
-        "symfony/framework-bundle": "^4.4",
-        "symfony/yaml": "^4.4",
-        "schoolit/adauth": "dev-master"
+        "symfony/console": "^4.4|^5.0",
+        "symfony/framework-bundle": "^4.4|^5.0",
+        "symfony/yaml": "^4.4|^5.0",
+        "schoolit/adauth": "^1.0.0"
     },
     "autoload": {
         "psr-4": {
             "AdAuthBundle\\": ""
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/schulit/adauth"
-        }
-    ]
+    }
 }
