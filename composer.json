@@ -2,14 +2,21 @@
     "name": "schulit/adauth-bundle",
     "version": "1.0.0",
     "type": "symfony-bundle",
+    "description": "Symfony bundle for schulit/adauth package",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcel Marnitz",
+            "email": "marcelmarnitz@googlemail.com"
+        }
+    ],
     "require": {
         "php": "^7.4",
         "ext-iconv": "*",
         "symfony/console": "^4.4|^5.0",
         "symfony/framework-bundle": "^4.4|^5.0",
         "symfony/yaml": "^4.4|^5.0",
-        "schulit/adauth": "^1.0.0"
+        "schulit/adauth": "^1.0"
     },
     "autoload": {
         "psr-4": {
