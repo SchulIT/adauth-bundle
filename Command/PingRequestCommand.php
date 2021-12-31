@@ -11,8 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PingRequestCommand extends Command {
 
-    private $adAuth;
-    private $serializer;
+    private AdAuthInterface $adAuth;
+    private SerializerInterface $serializer;
 
     public function __construct(AdAuthInterface $adAuth, SerializerInterface $serializer, string $name = null) {
         parent::__construct($name);
@@ -27,11 +27,9 @@ class PingRequestCommand extends Command {
             ->setDescription('Send a ping request to the server');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) {
+    public function execute(InputInterface $input, OutputInterface $output): int {
         try {
             $result = $this->adAuth->ping();
-
-            dump($result);
 
             $json = $this->serializer->serialize($result, 'json', null);
 

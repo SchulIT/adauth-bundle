@@ -14,8 +14,8 @@ use Symfony\Component\Console\Question\Question;
 
 class AuthRequestCommand extends Command {
 
-    private $adAuth;
-    private $serializer;
+    private AdAuthInterface $adAuth;
+    private SerializerInterface $serializer;
 
     public function __construct(AdAuthInterface $adAuth, SerializerInterface $serializer, string $name = null) {
         parent::__construct($name);
@@ -30,7 +30,7 @@ class AuthRequestCommand extends Command {
             ->setDescription('Send an authentication request to the server');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output) {
+    public function execute(InputInterface $input, OutputInterface $output): int {
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 

@@ -31,7 +31,7 @@ class AdAuthExtension extends Extension {
         $def->setArgument(2, new Reference($config['serializer']));
     }
 
-    public function getAlias() {
+    public function getAlias(): string {
         return 'adauth';
     }
 }

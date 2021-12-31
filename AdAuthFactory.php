@@ -8,14 +8,14 @@ use JMS\Serializer\SerializerInterface;
 
 class AdAuthFactory {
 
-    public static function createAdAuth(string $url, array $params, SerializerInterface $serializer) {
+    public static function createAdAuth(string $url, array $params, SerializerInterface $serializer): AdAuth {
         $options = static::resolveOptions($url);
         $stream = new TlsStream($params['ca_certificate_file'], $params['peer_name'], $params['peer_fingerprint']);
 
         return new AdAuth($options['host'], $stream, $serializer, $options['port']);
     }
 
-    private static function resolveOptions(string $url) {
+    private static function resolveOptions(string $url): array {
         $options = [
             'transport' => 'tls',
             'host' => null,
