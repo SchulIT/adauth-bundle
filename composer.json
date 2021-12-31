@@ -1,6 +1,6 @@
 {
     "name": "schulit/adauth-bundle",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "type": "symfony-bundle",
     "description": "Symfony bundle for schulit/adauth package",
     "license": "MIT",
