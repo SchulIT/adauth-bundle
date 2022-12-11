@@ -28,7 +28,6 @@ class AdAuthExtension extends Extension {
         $def = $container->getDefinition(AdAuthInterface::class);
         $def->setArgument(0, $config['url']);
         $def->setArgument(1, $config['tls']);
-        $def->setArgument(2, new Reference($config['serializer']));
     }
 
     public function getAlias(): string {

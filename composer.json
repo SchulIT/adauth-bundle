@@ -13,10 +13,10 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-iconv": "*",
-        "symfony/console": "^5.4|^6.0",
-        "symfony/framework-bundle": "^5.4|^6.0",
-        "symfony/yaml": "^5.4|^6.0",
-        "schulit/adauth": "^1.0"
+        "symfony/console": "^6.0",
+        "symfony/framework-bundle": "^6.0",
+        "symfony/yaml": "^6.0",
+        "schulit/adauth": "dev-master"
     },
     "autoload": {
         "psr-4": {

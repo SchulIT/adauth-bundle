@@ -16,9 +16,6 @@ class Configuration implements ConfigurationInterface {
 
         $rootNode
             ->children()
-                ->scalarNode('serializer')
-                    ->defaultValue('jms_serializer')
-                ->end()
                 ->scalarNode('url')
                     ->isRequired()
                 ->end()
