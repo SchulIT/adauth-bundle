@@ -22,9 +22,9 @@ class PingRequestCommand extends Command {
             $output->writeln(json_encode($result));
         } catch (SocketException $exception) {
             $this->getApplication()->renderThrowable($exception, $output);
-            return 1;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
