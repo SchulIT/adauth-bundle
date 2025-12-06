@@ -1,0 +1,16 @@
+services:
+  AdAuth\Stream\TlsStream:
+    arguments:
+      - '' # CA file
+      - '' # peer name
+      - '' # peer fingerprint
+
+  AdAuthBundle\AdAuthFactory: ~
+
+  AdAuth\AdAuthInterface:
+    class: AdAuth\AdAuth
+    factory: ['AdAuthBundle\AdAuthFactory', 'createAdAuth']
+    arguments:
+      - '' # URL
+      - '' # Params
+      - ~ # Serializer
