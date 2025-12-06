@@ -15,7 +15,7 @@ readonly class PingRequestCommand {
         private AdAuthInterface $adAuth
     ) { }
 
-    public function execute(SymfonyStyle $io): int {
+    public function __invoke(SymfonyStyle $io): int {
         try {
             $result = $this->adAuth->ping();
             $io->writeln(json_encode($result));
