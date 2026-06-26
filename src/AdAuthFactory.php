@@ -16,7 +16,7 @@ class AdAuthFactory {
     }
 
     public static function createAdAuth(string|null $url, array $params): AdAuth|null {
-        if($url === null) {
+        if(empty($url)) {
             return null;
         }
 
