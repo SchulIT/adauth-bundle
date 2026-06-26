@@ -28,6 +28,7 @@ class AdAuthBundle extends AbstractBundle {
                 ->end()
                 ->arrayNode('failover')
                     ->children()
+                        ->booleanNode('enabled')->defaultFalse()->end()
                         ->scalarNode('url')->isRequired()->end()
                         ->arrayNode('tls')
                             ->children()
@@ -57,7 +58,7 @@ class AdAuthBundle extends AbstractBundle {
 
         $container->setDefinition('adauth.primary', $primary);
 
-        if(isset($config['failover']['url'])) { // FAILOVER
+        if(isset($config['failover']['enabled']) && $config['failover']['enabled']) { // FAILOVER
             $secondary = new Definition(AdAuth::class);
             $secondary->setFactory([$factory, 'createAdAuth']);
             $secondary->setArgument(0, $config['failover']['url']);
@@ -73,6 +74,7 @@ class AdAuthBundle extends AbstractBundle {
             ]);
 
             $container->setDefinition('adauth', $chain);
+            $container->setAlias(AdAuthInterface::class, 'adauth');
         } else { // NO FAILOVER
             $container->setAlias(AdAuthInterface::class, 'adauth.primary');
             $container->setAlias('adauth', 'adauth.primary');
