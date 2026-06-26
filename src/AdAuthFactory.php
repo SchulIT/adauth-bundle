@@ -16,6 +16,10 @@ class AdAuthFactory {
     }
 
     public static function createAdAuth(string|null $url, array $params): AdAuth|null {
+        if($url === null) {
+            return null;
+        }
+
         $options = static::resolveOptions($url);
         $stream = new TlsStream($params['ca_certificate_file'], $params['peer_name'], $params['peer_fingerprint']);
 
