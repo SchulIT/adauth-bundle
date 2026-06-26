@@ -52,7 +52,7 @@ class AdAuthBundle extends AbstractBundle {
             $id = sprintf('adauth.%s', $alias);
             $serviceReferences[] = new Reference($id);
 
-            $container->set($id, $service);
+            $container->setDefinition($id, $service);
         }
 
         $chain = new Definition(FailoverAdAuthChain::class);
