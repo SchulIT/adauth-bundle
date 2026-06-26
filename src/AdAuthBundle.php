@@ -38,8 +38,6 @@ class AdAuthBundle extends AbstractBundle {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../config'));
         $loader->load('commands.yaml');
 
-        $container->setParameter('adauth.url', $config['url']);
-
         $factory = new Definition(AdAuthFactory::class);
         $container->setDefinition('adauth.factory', $factory);
 
