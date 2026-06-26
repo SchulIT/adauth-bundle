@@ -3,11 +3,19 @@
 namespace AdAuthBundle;
 
 use AdAuth\AdAuth;
+use AdAuth\AdAuthInterface;
+use AdAuth\FailoverAdAuthChain;
 use AdAuth\Stream\TlsStream;
 
 class AdAuthFactory {
 
-    public static function createAdAuth(string $url, array $params): AdAuth {
+    public static function createAdAuthChain(array $services): AdAuthInterface {
+        return new FailoverAdAuthChain(
+            array_filter($services, fn($service) => $service !== null)
+        );
+    }
+
+    public static function createAdAuth(string|null $url, array $params): AdAuth|null {
         $options = static::resolveOptions($url);
         $stream = new TlsStream($params['ca_certificate_file'], $params['peer_name'], $params['peer_fingerprint']);
 

@@ -58,6 +58,7 @@ class AdAuthBundle extends AbstractBundle {
         }
 
         $chain = new Definition(FailoverAdAuthChain::class);
+        $chain->setFactory([$factory, 'createAdAuthChain']);
         $chain->setArgument(0, $serviceReferences);
 
         $container->setDefinition('adauth', $chain);
